@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraDragMobile : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class CameraDragMobile : MonoBehaviour
             }
             else if (touch.phase == TouchPhase.Moved && isDragging)
             {
+                if (BuildingPanelManager.Instance.panel.activeSelf) return;
                 Vector2 delta = touch.position - lastTouchPosition;
                 Vector3 move = new Vector3(-delta.x * dragSpeed * Time.deltaTime, -delta.y * dragSpeed * Time.deltaTime, 0);
 
@@ -53,4 +55,5 @@ public class CameraDragMobile : MonoBehaviour
             position.z
         );
     }
+
 }
