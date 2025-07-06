@@ -8,9 +8,23 @@ public class BuildingAction
     public Sprite icon;
     public ButtonType actionType;
     public float cooldownDuration = 5f; // 🔥 Eklenen kısım
+    public List<StatChange> statChanges; // 👈 Yeni ekleme
+
+}
+[System.Serializable]
+public class StatChange
+{
+    public StatType statType;
+    public int amount; // + artış, - azalış
 }
 
-
+public enum StatType
+{
+    Money,
+    Fame,
+    Hunger,
+    Energy
+}
 public enum ButtonType
 {
     OpenMarket,

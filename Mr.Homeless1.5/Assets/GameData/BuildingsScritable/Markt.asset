@@ -21,15 +21,25 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
     actionType: 0
     cooldownDuration: 0
+    statChanges: []
   - buttonText: Soygun Yap
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
     actionType: 1
-    cooldownDuration: 2
+    cooldownDuration: 1
+    statChanges:
+    - statType: 0
+      amount: 2
+    - statType: 2
+      amount: -5
+    - statType: 3
+      amount: -5
   - buttonText: "Camlar\u0131 \u0130ndir"
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
     actionType: 2
     cooldownDuration: 3
+    statChanges: []
   - buttonText: "Kavga \xC7\u0131kar"
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
     actionType: 3
     cooldownDuration: 4
+    statChanges: []

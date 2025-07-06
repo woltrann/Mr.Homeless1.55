@@ -19,6 +19,9 @@ public class BuildingPanelManager : MonoBehaviour
 
     private List<GameObject> activeButtons = new List<GameObject>();
     public GameObject buttonPrefab; // Tek, generic prefab
+    private Vector2 touchStartPos;
+    public float dragThreshold = 20f; // Ekranda 20 pikselden az hareket týklama sayýlýr
+
 
     void Awake()
     {
@@ -34,18 +37,41 @@ public class BuildingPanelManager : MonoBehaviour
     void Update()
     {
         if (panel.activeSelf)
-            return; // Panel açýkken sahne týklamalarýný engelle
+            return;
 
-        // Mobil dokunma
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
         {
-            HandleTap(Input.GetTouch(0).position);
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                touchStartPos = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                float distance = Vector2.Distance(touch.position, touchStartPos);
+
+                if (distance < dragThreshold)
+                {
+                    HandleTap(touch.position);
+                }
+                // Eðer mesafe büyükse kaydýrma yapýlmýþtýr, panel açýlmaz.
+            }
         }
 
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
-            HandleTap(Input.mousePosition);
+            touchStartPos = Input.mousePosition;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            float distance = Vector2.Distance((Vector2)Input.mousePosition, touchStartPos);
+
+            if (distance < dragThreshold)
+            {
+                HandleTap(Input.mousePosition);
+            }
         }
 #endif
     }
@@ -83,7 +109,7 @@ public class BuildingPanelManager : MonoBehaviour
             cooldown.cooldownDuration = action.cooldownDuration;
             cooldown.SetActionText(action.buttonText);
             cooldown.SetCallback(() => {
-                ExecuteAction(action.actionType);
+                ExecuteAction(action.actionType, action);
                 CooldownManager.Instance.StartCooldown(id, action.cooldownDuration);
             });
 
@@ -111,8 +137,10 @@ public class BuildingPanelManager : MonoBehaviour
 
 
 
-    public void ExecuteAction(ButtonType type)
+    public void ExecuteAction(ButtonType type, BuildingAction action)
     {
+        StatManager.Instance.ApplyStatChanges(action.statChanges);
+
         switch (type)
         {
             case ButtonType.OpenMarket:
@@ -120,13 +148,13 @@ public class BuildingPanelManager : MonoBehaviour
                 Debug.Log("Market açýldý.");
                 break;
             case ButtonType.StartJob:
-                Debug.Log("Ýþe baþlandý.");
+                Congrats.Instance.OpenResultPanel();
                 break;
             case ButtonType.TalkToNPC:
-                Debug.Log("NPC ile konuþuldu.");
+                Congrats.Instance.OpenResultPanel();
                 break;
             case ButtonType.UpgradeBuilding:
-                Debug.Log("Bina geliþtirildi.");
+                Congrats.Instance.OpenResultPanel();
                 break;
         }
     }
