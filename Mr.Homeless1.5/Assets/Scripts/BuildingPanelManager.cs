@@ -7,17 +7,15 @@ public class BuildingPanelManager : MonoBehaviour
 {
     public static BuildingPanelManager Instance;
 
-    [Header("Panel UI Referanslarý")]
-    public GameObject panel;
+    [Header("Panel UI Referanslarý")]    
+    private List<GameObject> activeButtons = new List<GameObject>();
+    public GameObject panelBuilding;
     public GameObject MarketPaneli;
     public GameObject ClosepanelButton;
     public Text titleText;
     public Text descriptionText;
     public Image buildingImage;
     public Transform buttonParent;
-    public GameObject defaultButtonPrefab;
-
-    private List<GameObject> activeButtons = new List<GameObject>();
     public GameObject buttonPrefab; // Tek, generic prefab
     private Vector2 touchStartPos;
     public float dragThreshold = 20f; // Ekranda 20 pikselden az hareket týklama sayýlýr
@@ -28,7 +26,7 @@ public class BuildingPanelManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
-        panel.SetActive(false);
+        panelBuilding.SetActive(false);
         MarketPaneli.SetActive(false); 
         ClosepanelButton.SetActive(false);
 
@@ -36,7 +34,7 @@ public class BuildingPanelManager : MonoBehaviour
 
     void Update()
     {
-        if (panel.activeSelf)
+        if (panelBuilding.activeSelf)
             return;
 
         if (Input.touchCount > 0)
@@ -91,7 +89,7 @@ public class BuildingPanelManager : MonoBehaviour
 
     public void ShowBuildingInfo(Buildings data)
     {
-        panel.SetActive(true);
+        panelBuilding.SetActive(true);
 
         titleText.text = data.buildingName;
         descriptionText.text = data.description;
@@ -127,7 +125,7 @@ public class BuildingPanelManager : MonoBehaviour
     public void ClosePanel()
     {
         ClearOldButtons();
-        panel.SetActive(false);
+        panelBuilding.SetActive(false);
         MarketPaneli.SetActive(false);
         ClosepanelButton.SetActive(false);
 

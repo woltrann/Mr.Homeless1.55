@@ -12811,15 +12811,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2db66cfe85e3f54785f36e8dc7ef6aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 1162264588}
+  panelBuilding: {fileID: 0}
   MarketPaneli: {fileID: 465738587}
   ClosepanelButton: {fileID: 1843152039}
   titleText: {fileID: 1336572655}
   descriptionText: {fileID: 561617940}
   buildingImage: {fileID: 1322015276}
   buttonParent: {fileID: 1661056928}
-  defaultButtonPrefab: {fileID: 6820233610959380282, guid: e257b00ce4536794f956ec08f8845d4e, type: 3}
   buttonPrefab: {fileID: 4994940278803529925, guid: e8e5cd31308c8f44597fb43b0346240f, type: 3}
+  dragThreshold: 20
 --- !u!4 &682773948
 Transform:
   m_ObjectHideFlags: 0
@@ -27181,7 +27181,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -29.9, y: -181.2}
+  m_AnchoredPosition: {x: -29.900024, y: -181.20001}
   m_SizeDelta: {x: 390.7926, y: 1770.6882}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1554859337
@@ -28772,7 +28772,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 634180418}
   m_HandleRect: {fileID: 634180417}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -35007,7 +35007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.20633473, y: 0.18717875}
   m_AnchorMax: {x: 1.0000025, y: 0.8128201}
-  m_AnchoredPosition: {x: -3.0999985, y: 0.0000076293945}
+  m_AnchoredPosition: {x: -3.0999947, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 0.000022888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1972786508
@@ -37244,7 +37244,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70.55
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
