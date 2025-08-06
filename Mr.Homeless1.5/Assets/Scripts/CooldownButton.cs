@@ -11,6 +11,7 @@ public class CooldownButton : MonoBehaviour
     public float cooldownDuration = 5f;
     public Text cooldownText; // Soldaki sayaç
     public Text actionText;   // Butonun anlamý (örneðin "Market Aç")
+    public Text jobDeffanceText; 
 
     private Button button;
     private float currentCooldown = 0f;
@@ -46,10 +47,19 @@ public class CooldownButton : MonoBehaviour
         onClickCallback = callback;
     }
 
-    public void SetActionText(string text)
+    public void SetActionText(string text, string deffencetext)
     {
         if (actionText != null)
             actionText.text = text;
+        if (deffencetext == "0")
+        {
+            jobDeffanceText.text = "-";  
+        }
+        else
+        {
+            jobDeffanceText.text = deffencetext;
+        }
+        
     }
 
     IEnumerator CooldownRoutine()

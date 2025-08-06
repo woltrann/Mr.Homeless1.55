@@ -18,13 +18,33 @@ MonoBehaviour:
   actions:
   - buttonText: Parkta Uyu
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
-    actionType: 0
-    cooldownDuration: 2
+    actionType: 1
+    cooldownDuration: 60
+    jobDeffance: 0
+    statChanges:
+    - statType: 2
+      amount: 40
+    - statType: 3
+      amount: 20
   - buttonText: "\xC7\xF6pten Ye"
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
     actionType: 1
-    cooldownDuration: 80
+    cooldownDuration: 1
+    jobDeffance: 0
+    statChanges:
+    - statType: 2
+      amount: -2
+    - statType: 3
+      amount: 10
   - buttonText: Dilen
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
-    actionType: 2
-    cooldownDuration: 4
+    actionType: 1
+    cooldownDuration: 2
+    jobDeffance: 0
+    statChanges:
+    - statType: 0
+      amount: 2
+    - statType: 2
+      amount: -1
+    - statType: 3
+      amount: -7

@@ -20,11 +20,13 @@ public class BuildingPanelManager : MonoBehaviour
     private Vector2 touchStartPos;
     public float dragThreshold = 20f; // Ekranda 20 pikselden az hareket týklama sayýlýr
 
+    public GameObject storepanel;
+
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        Instance = this;
+ 
 
         panelBuilding.SetActive(false);
         MarketPaneli.SetActive(false); 
@@ -34,7 +36,7 @@ public class BuildingPanelManager : MonoBehaviour
 
     void Update()
     {
-        if (panelBuilding.activeSelf)
+        if (panelBuilding.activeSelf || DialogueManager.Instance.dialoguePanel.activeSelf)
             return;
 
         if (Input.touchCount > 0)
@@ -105,7 +107,7 @@ public class BuildingPanelManager : MonoBehaviour
             string id = data.buildingName + "_" + action.actionType.ToString();
             cooldown.cooldownID = id;
             cooldown.cooldownDuration = action.cooldownDuration;
-            cooldown.SetActionText(action.buttonText);
+            cooldown.SetActionText(action.buttonText, action.jobDeffance.ToString());
             cooldown.SetCallback(() => {
                 ExecuteAction(action.actionType, action);
                 CooldownManager.Instance.StartCooldown(id, action.cooldownDuration);
@@ -137,28 +139,55 @@ public class BuildingPanelManager : MonoBehaviour
 
     public void ExecuteAction(ButtonType type, BuildingAction action)
     {
-        StatManager.Instance.ApplyStatChanges(action.statChanges);
-
-        switch (type)
+        if (action.jobDeffance > StatManager.Instance.power)
         {
-            case ButtonType.OpenMarket:
-                MarketPaneli.SetActive(true);
-                Debug.Log("Market açýldý.");
-                break;
-            case ButtonType.StartJob:
-                Congrats.Instance.OpenResultPanel();
-                break;
-            case ButtonType.TalkToNPC:
-                Congrats.Instance.OpenResultPanel();
-                break;
-            case ButtonType.UpgradeBuilding:
-                Congrats.Instance.OpenResultPanel();
-                break;
+            StatManager.Instance.ApplyStatChanges(new List<StatChange> {
+                new StatChange { statType = StatType.Energy, amount = action.statChanges.Find(a => a.statType == StatType.Energy).amount },
+                new StatChange { statType = StatType.Health, amount = action.statChanges.Find(c => c.statType == StatType.Health).amount }});
+            Congrats.Instance.panelTitle.text = "<color=#A63A3A>BAÞARAMADIN</color>";
+            Congrats.Instance.panelText.text = "Ýþlem baþarýsýz. Gücünüzü artýrýp tekrar denemelisiniz.";
+            Congrats.Instance.OpenResultPanel();
+        }
+        else
+        {
+            StatManager.Instance.ApplyStatChanges(action.statChanges);
+            Congrats.Instance.panelTitle.text = "<color=#5EA63A>TEBRÝKLER</color>";
+            Congrats.Instance.panelText.text = "Ýþlem Baþarýlý. Gücünüze güç katarak daha iyi iþler çýkarabilirsiniz. ";
+
+
+            switch (type)
+            {
+                case ButtonType.OpenMarket:
+                    MarketPaneli.SetActive(true);
+                    Debug.Log("Market açýldý.");
+                    break;
+                case ButtonType.StartJob:
+                    Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.TalkToNPC:
+                    Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.UpgradeBuilding:
+                    Congrats.Instance.OpenResultPanel();
+                    break;
+            }
         }
     }
+
+        
     public void CloseMarketPanel()
     {
         MarketPaneli.SetActive(false);
 
     }
+
+    public void StorePanelOpen()
+    {
+        storepanel.SetActive(true);
+    }
+    public void StorePanelClose()
+    {
+        storepanel.SetActive(false);
+    }
+
 }

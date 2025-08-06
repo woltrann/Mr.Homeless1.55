@@ -29,10 +29,9 @@ public class CooldownManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ✔ kalıcı yap
             LoadCooldowns();
         }
-        else Destroy(gameObject);
+
     }
 
     public void StartCooldown(string id, float duration)
@@ -92,6 +91,16 @@ public class CooldownManager : MonoBehaviour
             {
                 cooldownTimers[entry.id] = endTime;
             }
+        }
+    }
+    public void ResetAllCooldowns()
+    {
+        cooldownTimers.Clear();
+
+        // Kaydedilen cooldown dosyasını da sil
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
         }
     }
 

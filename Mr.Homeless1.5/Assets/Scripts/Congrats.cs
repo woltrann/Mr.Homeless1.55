@@ -2,13 +2,14 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Congrats : MonoBehaviour
 {
-    public static Congrats Instance;
-    //public GameObject ResultPanel;
-    private int a = 0;
-    public Text text;
+    public static Congrats Instance;  
+    public GameObject GameOverPanel;
+    public Text panelTitle;
+    public Text panelText;
 
     private void Awake()
     {
@@ -35,5 +36,15 @@ public class Congrats : MonoBehaviour
         yield return new WaitForSeconds(2f);
         transform.localScale = new Vector3(0f, 0f, 0f);
 
+    }
+
+    public void GameOver()
+    {
+        GameOverPanel.SetActive(true);
+    }
+    public void RestartGame()
+    {
+        CooldownManager.Instance.ResetAllCooldowns();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

@@ -9,65 +9,86 @@ public class StatManager : MonoBehaviour
 
     public int money;
     public int fame;
-    public int hunger;
+    public int power;
+    public int health;
     public int energy;
 
-    public Slider hungerSlider;
+    public Slider healthSlider;
     public Slider energySlider;
-    public Text hungr;
-    public Text energ;
-
+    public Text healthText;
+    public Text energyText;
 
     public Text moneyText;
+    public Text fameText;
     public TextMeshProUGUI ResourceText ;
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+         Instance = this; 
     }
 
     void Start()
     {
-        hungerSlider.minValue = 0;
-        hungerSlider.maxValue = 100;
-        hungerSlider.value = hunger;
+        healthSlider.minValue = 0;
+        healthSlider.maxValue = 100;
+        healthSlider.value = health;
+        healthText.text = health.ToString() + "/" + healthSlider.maxValue.ToString();
 
         energySlider.minValue = 0;
         energySlider.maxValue = 100;
         energySlider.value = energy;
+        energyText.text = energy.ToString() + "/" + energySlider.maxValue.ToString();
+
+        moneyText.text = money.ToString();
+        fameText.text = fame.ToString();
+
     }
     public void ApplyStatChanges(List<StatChange> changes)
     {
-        string changesSummary = ""; // 🪐 Değişim özetini tutacak
-
+        string changesSummary = ""; //  Değişim özetini tutacak
         foreach (var change in changes)
         {
+            
             switch (change.statType)
             {
                 case StatType.Money:
                     money += change.amount;
                     moneyText.text = money.ToString();
-
                     changesSummary += $"<sprite name=\"can\"> Para: {change.amount}$\n";
                     break;
+
                 case StatType.Fame:
                     fame += change.amount;
+                    fameText.text = fame.ToString();
                     changesSummary += $"Şöhret: {change.amount}\n";
                     break;
-                case StatType.Hunger:
-                    hunger += change.amount;
-                    changesSummary += $"Açlık: {change.amount}\n";
-                    hungerSlider.value = hunger;    // Slider’ı güncelle
-                    hungr.text = hunger.ToString()+"/"+hungerSlider.maxValue.ToString();
+
+                case StatType.Health:
+                    health += change.amount;
+                    healthSlider.value = health;    // Slider’ı güncelle
+                    healthText.text = health.ToString() + "/" + healthSlider.maxValue.ToString();
+                    changesSummary += $"Can: {change.amount}\n";
                     break;
+
                 case StatType.Energy:
                     energy += change.amount;
-                    changesSummary += $"Enerji: {change.amount}\n";
                     energySlider.value = energy;    // Slider’ı güncelle
-                    energ.text = energy.ToString() + "/" + energySlider.maxValue.ToString();
+                    energyText.text = energy.ToString() + "/" + energySlider.maxValue.ToString();
+                    changesSummary += $"Enerji: {change.amount}\n";
                     break;
             }
         }
         ResourceText.text = changesSummary;
+        HealthEnergyController();
+    }
+    public void HealthEnergyController()
+    {
+        if (healthSlider.value <= 0 || energySlider.value <= 0)
+        {
+            health=0;
+            energy=0;
+            healthText.text = health.ToString() + "/" + healthSlider.maxValue.ToString();
+            energyText.text = energy.ToString() + "/" + energySlider.maxValue.ToString();
+            Congrats.Instance.GameOver();
+        }
     }
 }

@@ -8,6 +8,7 @@ public class BuildingAction
     public Sprite icon;
     public ButtonType actionType;
     public float cooldownDuration = 5f; // 🔥 Eklenen kısım
+    public int jobDeffance;
     public List<StatChange> statChanges; // 👈 Yeni ekleme
 
 }
@@ -22,7 +23,7 @@ public enum StatType
 {
     Money,
     Fame,
-    Hunger,
+    Health,
     Energy
 }
 public enum ButtonType
