@@ -28,7 +28,11 @@ public class CameraSwitcher : MonoBehaviour
         blackTexture.SetPixel(0, 0, Color.black);
         blackTexture.Apply();
     }
-
+    private void Update()
+    {
+        ApplyCameraScaling(camera1);
+        ApplyCameraScaling(camera2);
+    }
     private void ApplyCameraScaling(Camera cam)
     {
         if (cam != null && cam.orthographic)

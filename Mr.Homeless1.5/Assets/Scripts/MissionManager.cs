@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class MissionManager : MonoBehaviour
@@ -11,10 +12,10 @@ public class MissionManager : MonoBehaviour
     public List<Tasks> missions = new List<Tasks>();
     private int currentMissionIndex = 0;
 
-    public Text TaskNo;
-    public Text TaskName;
-    public Text TaskDescription;
-    public Text TaskReward;
+    public TextMeshProUGUI TaskNo;
+    public TextMeshProUGUI TaskName;
+    public TextMeshProUGUI TaskDescription;
+    public TextMeshProUGUI TaskReward;
 
     public Transform completedTaskContent; // Content objesi
     public GameObject completedTaskPanelPrefab; // Panel prefabý

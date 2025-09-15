@@ -1,10 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Speaker
+{
+    Player,
+    OldMan
+}
+
 [System.Serializable]
 public class DialogueLine
 {
-    public string speakerName;
+    public Speaker speaker;
     [TextArea] public string text;
 }
 

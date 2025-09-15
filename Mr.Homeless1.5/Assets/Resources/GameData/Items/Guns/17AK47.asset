@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afad193fc5863aa49822fdafd7a49225, type: 3}
+  m_Name: 17AK47
+  m_EditorClassIdentifier: 
+  itemName: AK47
+  shortDescription: "+1500 G\xFC\xE7"
+  longDescription: "D\xFCnya de\u011Fi\u015Fir ama onun tad\u0131 hep ayn\u0131.\n\n\n+1500
+    G\xFC\xE7\nFiyat: 200000$"
+  itemIcon: {fileID: 21300000, guid: 08ebc92aeeab3ac428f3cc78118564ce, type: 3}
+  price: 200000
+  itemType: 1
+  equipmentType: 0
+  powerAmount: 1500

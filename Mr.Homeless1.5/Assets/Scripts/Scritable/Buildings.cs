@@ -30,6 +30,11 @@ public enum ButtonType
 {
     OpenMarket,
     StartJob,
+    StartJob1,
+    StartJob2,
+    StartJob3,
+    StartJob4,
+    StartJob5,
     TalkToNPC,
     UpgradeBuilding
 }
@@ -41,4 +46,5 @@ public class Buildings : ScriptableObject
     [TextArea] public string description;
     public Sprite buildingImage;
     public List<BuildingAction> actions;
+    public ItemData[] purchesableItems;
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 
@@ -6,20 +6,21 @@ public class UIPanelSlider : MonoBehaviour
 {
     public RectTransform panel;
     public GameObject backgroundClickArea;
-    public Vector2 onScreenPos;
-    public Vector2 offScreenPos;
-    public float duration = 0.5f;
-    public Ease ease = Ease.OutCubic;
+    public float duration = 0.3f;
+    public Ease ease = Ease.OutBack;
 
-    private bool isOpen = false;
+    public bool isOpen = false;
 
-    //  Statik olarak t�m panel slider'lar� tut
     private static List<UIPanelSlider> allPanels = new List<UIPanelSlider>();
 
     private void Awake()
     {
         if (!allPanels.Contains(this))
             allPanels.Add(this);
+
+        // Pivot sol üst → aşağı doğru büyümesi için
+        if (panel != null)
+            panel.pivot = new Vector2(0, 1);
     }
 
     private void OnDestroy()
@@ -29,7 +30,10 @@ public class UIPanelSlider : MonoBehaviour
 
     private void Start()
     {
-        panel.anchoredPosition = offScreenPos;
+        // Başlangıçta kapalı: genişlik sabit (X=1), yükseklik 0
+        if (panel != null)
+            panel.localScale = new Vector3(1, 0, 1);
+
         if (backgroundClickArea != null)
             backgroundClickArea.SetActive(false);
     }
@@ -38,29 +42,43 @@ public class UIPanelSlider : MonoBehaviour
     {
         if (isOpen) Close();
         else OpenAndCloseOthers();
+
+
+        //BuildingPanelManager.Instance.ToggleInventory();
     }
 
     public void OpenAndCloseOthers()
     {
-        //  Di�er a��k panelleri kapat
+        isOpen = true;
+        BuildingPanelManager.Instance.isOpen = true;
         foreach (var p in allPanels)
         {
             if (p != this && p.isOpen)
                 p.Close();
         }
 
-        // Kendi panelini a�
-        panel.DOAnchorPos(onScreenPos, duration).SetEase(ease);
-        isOpen = true;
+        // Açılırken sadece Y ekseni büyür
+        panel.DOScaleY(1, duration).SetEase(ease);
+        
+
         if (backgroundClickArea != null)
             backgroundClickArea.SetActive(true);
     }
 
     public void Close()
     {
-        panel.DOAnchorPos(offScreenPos, duration).SetEase(ease);
+        // Kapanırken sadece Y ekseni küçülür
+        panel.DOScaleY(0, duration).SetEase(Ease.InBack);
         isOpen = false;
         if (backgroundClickArea != null)
             backgroundClickArea.SetActive(false);
+
+        InventoryUIManager.Instance.ClearSelection();
+    }
+    public void CloseBool()
+    {
+        BuildingPanelManager.Instance.isOpen = false;
+        isOpen = false;
+
     }
 }

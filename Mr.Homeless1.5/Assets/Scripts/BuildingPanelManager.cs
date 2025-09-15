@@ -1,26 +1,49 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class BuildingPanelManager : MonoBehaviour
 {
     public static BuildingPanelManager Instance;
+    [HideInInspector] public ConstructionSite currentConstructionSite; // O anki tÄ±klanan alan
+    [HideInInspector] public Constructions selectedConstruction; // geÃ§ici olarak seÃ§ilen bina
 
-    [Header("Panel UI Referanslarý")]    
-    private List<GameObject> activeButtons = new List<GameObject>();
+    [Header("Ä°nÅŸaat UI ReferanslarÄ±")]
+    public GameObject buildingDetailPanel;
+    public TextMeshProUGUI detailTitle;
+    public TextMeshProUGUI detailDescription;
+    public TextMeshProUGUI detailCost;
+    public Image detailIcon;
+
+    [Header("Ä°nÅŸaa Edilen UI ReferanslarÄ±")]    
+    public GameObject constructionDetailPanel;
+    public TextMeshProUGUI constructionDetailTitle;
+    public TextMeshProUGUI constructionDetailDescription;
+    public TextMeshProUGUI constructionDetailPrice;
+    public Image constructionDetailIcon;
+
+    [Header("Panel UI ReferanslarÄ±")]    
     public GameObject panelBuilding;
     public GameObject MarketPaneli;
     public GameObject ClosepanelButton;
-    public Text titleText;
-    public Text descriptionText;
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI descriptionText;
     public Image buildingImage;
     public Transform buttonParent;
     public GameObject buttonPrefab; // Tek, generic prefab
     private Vector2 touchStartPos;
-    public float dragThreshold = 20f; // Ekranda 20 pikselden az hareket týklama sayýlýr
+    public float dragThreshold = 20f; // Ekranda 20 pikselden az hareket tÄ±klama sayÄ±lÄ±r
+    private List<GameObject> activeButtons = new List<GameObject>();
 
     public GameObject storepanel;
+    public CameraDragMobile[] cameraDragScripts; // Hierarchyâ€™deki 2 kamerayÄ± buraya sÃ¼rÃ¼kle
+    public bool isOpen = false;
+
+    public GameObject buyPanel;
+    public GameObject chooseBuildingPanel;
+    public GameObject infoPanel;
 
 
     void Awake()
@@ -33,10 +56,9 @@ public class BuildingPanelManager : MonoBehaviour
         ClosepanelButton.SetActive(false);
 
     }
-
     void Update()
     {
-        if (panelBuilding.activeSelf || DialogueManager.Instance.dialoguePanel.activeSelf)
+        if (panelBuilding.activeSelf || DialogueManager.Instance.dialoguePanel.activeSelf || isOpen || buyPanel.activeSelf || chooseBuildingPanel.activeSelf || infoPanel.activeSelf || constructionDetailPanel.activeSelf || StoryManager.Instance.storyUI.activeSelf || MainMenu.Instance.mainMenu.activeSelf)
             return;
 
         if (Input.touchCount > 0)
@@ -55,7 +77,8 @@ public class BuildingPanelManager : MonoBehaviour
                 {
                     HandleTap(touch.position);
                 }
-                // Eðer mesafe büyükse kaydýrma yapýlmýþtýr, panel açýlmaz.
+    
+                // EÄŸer mesafe bÃ¼yÃ¼kse kaydÄ±rma yapÄ±lmÄ±ÅŸtÄ±r, panel aÃ§Ä±lmaz.
             }
         }
 
@@ -81,10 +104,27 @@ public class BuildingPanelManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(screenPosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
+            // 1. Ã–nce bina kontrolÃ¼
             var buildingInfo = hit.collider.GetComponent<BuildingInfo>();
             if (buildingInfo != null && buildingInfo.buildingData != null)
             {
                 ShowBuildingInfo(buildingInfo.buildingData);
+                return;
+            }
+
+            // 2. EÄŸer bina deÄŸilse ConstructionSite kontrolÃ¼
+            var site = hit.collider.GetComponent<ConstructionSite>();
+            if (site != null)
+            {
+                site.OnClick();
+                return;
+            }
+
+            var construction = hit.collider.GetComponent<BuildingInfo>();
+            if (construction != null && construction.constructions != null)
+            {
+                construction.OnTopConstruction();
+                return;
             }
         }
     }
@@ -96,6 +136,7 @@ public class BuildingPanelManager : MonoBehaviour
         titleText.text = data.buildingName;
         descriptionText.text = data.description;
         buildingImage.sprite = data.buildingImage;
+
 
         ClearOldButtons();
 
@@ -117,7 +158,13 @@ public class BuildingPanelManager : MonoBehaviour
         }
 
         ClosepanelButton.SetActive(true);
+
+        if (MarketUIManager.Instance != null)
+        {
+            MarketUIManager.Instance.OpenMarket(data);
+        }
     }
+
     public void ClearOldButtons()
     {
         foreach (var b in activeButtons) Destroy(b);
@@ -133,54 +180,63 @@ public class BuildingPanelManager : MonoBehaviour
 
     }
 
-
-
-
-
     public void ExecuteAction(ButtonType type, BuildingAction action)
     {
-        if (action.jobDeffance > StatManager.Instance.power)
+        if (action.jobDeffance > StatManager.Instance.totalPower)
         {
             StatManager.Instance.ApplyStatChanges(new List<StatChange> {
                 new StatChange { statType = StatType.Energy, amount = action.statChanges.Find(a => a.statType == StatType.Energy).amount },
                 new StatChange { statType = StatType.Health, amount = action.statChanges.Find(c => c.statType == StatType.Health).amount }});
-            Congrats.Instance.panelTitle.text = "<color=#A63A3A>BAÞARAMADIN</color>";
-            Congrats.Instance.panelText.text = "Ýþlem baþarýsýz. Gücünüzü artýrýp tekrar denemelisiniz.";
+            Congrats.Instance.panelTitle.text = "<color=#A63A3A>BAÅžARAMADIN</color>";
+            Congrats.Instance.panelText.text = "Ä°ÅŸlem baÅŸarÄ±sÄ±z. GÃ¼cÃ¼nÃ¼zÃ¼ artÄ±rÄ±p tekrar denemelisiniz.";
             Congrats.Instance.OpenResultPanel();
         }
         else
         {
             StatManager.Instance.ApplyStatChanges(action.statChanges);
-            Congrats.Instance.panelTitle.text = "<color=#5EA63A>TEBRÝKLER</color>";
-            Congrats.Instance.panelText.text = "Ýþlem Baþarýlý. Gücünüze güç katarak daha iyi iþler çýkarabilirsiniz. ";
+            Congrats.Instance.panelTitle.text = "<color=#5EA63A>TEBRÄ°KLER</color>";
+            Congrats.Instance.panelText.text = "Ä°ÅŸlem BaÅŸarÄ±lÄ±. GÃ¼cÃ¼nÃ¼ze gÃ¼Ã§ katarak daha iyi iÅŸler Ã§Ä±karabilirsiniz. ";
 
 
             switch (type)
             {
                 case ButtonType.OpenMarket:
                     MarketPaneli.SetActive(true);
-                    Debug.Log("Market açýldý.");
+                    Debug.Log("Market aÃ§Ä±ldÄ±.");
                     break;
                 case ButtonType.StartJob:
                     Congrats.Instance.OpenResultPanel();
                     break;
-                case ButtonType.TalkToNPC:
+                case ButtonType.StartJob1:
                     Congrats.Instance.OpenResultPanel();
                     break;
-                case ButtonType.UpgradeBuilding:
+                case ButtonType.StartJob2:
                     Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.StartJob3:
+                    Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.StartJob4:
+                    Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.StartJob5:
+                    Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.TalkToNPC:
+                    //Congrats.Instance.OpenResultPanel();
+                    break;
+                case ButtonType.UpgradeBuilding:
+                    //Congrats.Instance.OpenResultPanel();
                     break;
             }
         }
     }
-
-        
+     
     public void CloseMarketPanel()
     {
         MarketPaneli.SetActive(false);
 
     }
-
     public void StorePanelOpen()
     {
         storepanel.SetActive(true);
@@ -189,5 +245,79 @@ public class BuildingPanelManager : MonoBehaviour
     {
         storepanel.SetActive(false);
     }
+    public void ToggleInventory()
+    {
+        isOpen = true;
 
+        // Kamera kontrol scriptlerini aÃ§/kapat
+        foreach (var camDrag in cameraDragScripts)
+        {
+            if (camDrag != null)
+                camDrag.enabled = !isOpen;
+        }
+    }
+
+    public void CloseConstructionPanel()
+    {
+        buyPanel.SetActive(false);
+        chooseBuildingPanel.SetActive(false);
+        buildingDetailPanel.SetActive(false);
+    }
+    public void BuyConstructionArea()
+    {
+        if (currentConstructionSite != null)
+            currentConstructionSite.BuyLand();
+    }
+    public void SelectBuilding(Constructions constructionData)
+    {
+        selectedConstruction = constructionData;
+
+        // Detay panelini aÃ§
+        ShowConstructionDetails(constructionData);
+    }
+
+    public void ShowConstructionDetails(Constructions data)
+    {
+        buildingDetailPanel.SetActive(true);
+
+        detailTitle.text = data.buildingName;
+        detailDescription.text = data.buyDescription;
+        detailCost.text = $"Maliyet: {data.cost}";
+        detailIcon.sprite = data.buildingIcon;
+    }
+    public void ShowConstructionBuildingDetails(Constructions data)
+    {
+        constructionDetailPanel.SetActive(true);
+
+        constructionDetailTitle.text = data.buildingName;
+        constructionDetailDescription.text = data.infoDescription;
+        constructionDetailPrice.text = $"KazanÃ§: {data.incomePerHour}";
+        detailIcon.sprite = data.buildingIcon;
+    }
+    public void BuySelectedBuilding()
+    {
+        if (selectedConstruction != null && currentConstructionSite != null)
+        {
+            if (selectedConstruction.cost <= StatManager.Instance.money)
+            {
+                StatManager.Instance.ChangeMoney(-selectedConstruction.cost);
+                // Parametre olarak prefab ver
+                BuildSelectedBuilding(selectedConstruction.prefab);
+
+                buildingDetailPanel.SetActive(false);
+                selectedConstruction = null; // temizle
+            }
+            else
+            {
+
+                BuildingPanelManager.Instance.infoPanel.SetActive(true);
+            }
+
+        }
+    }
+    public void BuildSelectedBuilding(GameObject buildingPrefab)
+    {
+        if (currentConstructionSite != null)
+            currentConstructionSite.Build(buildingPrefab);
+    }
 }

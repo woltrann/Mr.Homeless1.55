@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afad193fc5863aa49822fdafd7a49225, type: 3}
+  m_Name: 19Striker
+  m_EditorClassIdentifier: 
+  itemName: Striker
+  shortDescription: "+2000 G\xFC\xE7"
+  longDescription: "Tetik \xE7ekildi mi, yak\u0131n mesafe cehenneme d\xF6ner.\n\n\n+2000
+    G\xFC\xE7\nFiyat: 500000$"
+  itemIcon: {fileID: 21300000, guid: 487ddbf8384c72142a48bd329ec9905a, type: 3}
+  price: 500000
+  itemType: 1
+  equipmentType: 0
+  powerAmount: 2000

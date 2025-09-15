@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afad193fc5863aa49822fdafd7a49225, type: 3}
+  m_Name: 6DesertEagle
+  m_EditorClassIdentifier: 
+  itemName: Desert Eagle
+  shortDescription: "+65 G\xFC\xE7"
+  longDescription: "G\xFCr\xFClt\xFCs\xFC bile rakipleri susturur.\n\n\n+65 G\xFC\xE7\nFiyat:
+    850$"
+  itemIcon: {fileID: 21300000, guid: 0eac815b48f76da48acd23760dc58654, type: 3}
+  price: 850
+  itemType: 1
+  equipmentType: 0
+  powerAmount: 65

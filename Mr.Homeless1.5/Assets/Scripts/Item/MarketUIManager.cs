@@ -1,59 +1,101 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 
 public class MarketUIManager : MonoBehaviour
 {
-    public GameObject marketPanel;
-    public Transform contentParent; // ScrollView > Content
-    public GameObject itemPrefab;
-    public List<Item> itemsForSale; // Inspector�dan doldur
+    public static MarketUIManager Instance;
+    [Header("Market Data")]
+    public Buildings currentMarket;
 
-
-    private void OnEnable()
+    [Header("UI References")]
+    public Transform itemListParent; // ScrollView Content
+    public GameObject itemButtonPrefab; // Prefab with 2 Text child
+    public Image itemDetailIcon;
+    public TextMeshProUGUI itemDetailName;
+    public TextMeshProUGUI itemDetailDescription;
+    public TextMeshProUGUI itemDetailPrice;
+    public Button buyButton;
+    public Sprite nullSprite;
+    private ItemData selectedItem;
+    private void Awake()
     {
-        UpdateMarket();
+        Instance = this;
+    }
+    void Start()
+    {
+        InventoryManager.Instance.LoadInventory();
+
+    }
+    public void OpenMarket(Buildings marketData)
+    {
+        currentMarket = marketData;
+        //gameObject.SetActive(true);
+        RefreshMarketUI();
     }
 
-    public void UpdateMarket()
+    void RefreshMarketUI()
     {
-        foreach (Transform child in contentParent)
+        // Önce eski butonları temizle
+        foreach (Transform child in itemListParent)
         {
             Destroy(child.gameObject);
         }
 
-        foreach (Item item in itemsForSale)
+        // Market itemlerini listele
+        foreach (var item in currentMarket.purchesableItems)
         {
-            GameObject itemGO = Instantiate(itemPrefab, contentParent);
-            itemGO.transform.Find("ItemName").GetComponent<Text>().text = item.itemName;
-            itemGO.transform.Find("ItemPrice").GetComponent<Text>().text = "$" + item.price;
-            itemGO.transform.Find("ItemIcon").GetComponent<Image>().sprite = item.icon;
+            GameObject buttonObj = Instantiate(itemButtonPrefab, itemListParent);
+            TextMeshProUGUI[] texts = buttonObj.GetComponentsInChildren<TextMeshProUGUI>();
+            texts[0].text = item.itemName;
+            texts[1].text = item.shortDescription;
+            Image[] images = buttonObj.GetComponentsInChildren<Image>();
+            images[1].sprite = item.itemIcon;
 
-            Button buyButton = itemGO.transform.Find("BuyButton").GetComponent<Button>();
-            buyButton.onClick.AddListener(() => BuyItem(item));
+
+            Button btn = buttonObj.GetComponent<Button>();
+            btn.onClick.AddListener(() => ShowItemDetails(item));
         }
-
     }
 
-    public void BuyItem(Item item)
+    void ShowItemDetails(ItemData item)
     {
-        if (StatManager.Instance.money >= item.price)
-        {
-            StatManager.Instance.money -= item.price;
-            StatManager.Instance.moneyText.text = StatManager.Instance.money.ToString();
-            PlayerInventory.Instance.AddItem(item);
-            UpdateMarket();
-        }
-        else
-        {
-            Debug.Log("Yetersiz bakiye.");
-        }
+        selectedItem = item;
+        itemDetailIcon.sprite = item.itemIcon;
+        itemDetailName.text = item.itemName;
+        itemDetailDescription.text = item.longDescription;
+        itemDetailPrice.text = "Fiyat: " + item.price + "₺";
+
+        buyButton.onClick.RemoveAllListeners();
+        buyButton.onClick.AddListener(() => BuySelectedItem(item.price));
     }
-
-
-    public void ToggleMarketPanel(bool show)
+    public void ResetSelectedItem()
     {
-        marketPanel.SetActive(show);
-        if (show) UpdateMarket();
+        selectedItem = null;
+        itemDetailIcon.sprite = nullSprite;
+        itemDetailName.text = "";
+        itemDetailDescription.text = "";
+        itemDetailPrice.text = "";
+        buyButton.onClick.RemoveAllListeners();
     }
+    void BuySelectedItem(int price)
+    {
+        if (selectedItem != null)
+        {
+            if (StatManager.Instance.money >= price)
+            {
+                StatManager.Instance.money -= price;
+                StatManager.Instance.moneyText.text = StatManager.Instance.money.ToString();
+
+                InventoryManager.Instance.AddItem(selectedItem);
+                InventoryUIManager.Instance.UpdateInventoryUI();
+            }
+            else
+            {
+                Debug.Log(selectedItem.itemName + " için para yetersiz!");
+            }
+        }
+    }
+
 }

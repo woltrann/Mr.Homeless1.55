@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1875825b87231c54abd09ed3045033cf, type: 3}
+  m_Name: TunCaffee
+  m_EditorClassIdentifier: 
+  buildingName: Tun Caffee
+  description: "S\u0131cak kahve gibisi yok."
+  buildingImage: {fileID: 21300000, guid: cf58d198460d89a4fbcb81e31c98a1ee, type: 3}
+  actions:
+  - buttonText: "Al\u0131\u015Fveri\u015F Yap"
+    icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
+    actionType: 0
+    cooldownDuration: 0
+    jobDeffance: 0
+    statChanges: []
+  purchesableItems:
+  - {fileID: 11400000, guid: 0aeae33df2d7f6045841dced205b434b, type: 2}

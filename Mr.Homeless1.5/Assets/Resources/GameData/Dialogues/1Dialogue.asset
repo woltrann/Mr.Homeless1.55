@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da05283d33844bc43b94c5e3dfc12c0e, type: 3}
+  m_Name: 1Dialogue
+  m_EditorClassIdentifier: 
+  lines:
+  - speaker: 0
+    text: "On y\u0131l\u2026 Tam on y\u0131l\u0131m\u0131 \xE7ald\u0131lar benden.
+      Babam\u0131 ben \xF6ld\xFCrmedim\u2026 bunu biliyorum. Ama kimin yapt\u0131\u011F\u0131n\u0131
+      bulmak zorunday\u0131m."
+  - speaker: 0
+    text: "Sokak\u2026 bu benim \xE7ocuklu\u011Fumun soka\u011F\u0131yd\u0131. Ama
+      \u015Fimdi\u2026 buralar tan\u0131nmaz halde. Evler gitmi\u015F, yerine devasa
+      yap\u0131lar dikilmi\u015F."
+  - speaker: 0
+    text: "Bana bir \xE7\u0131k\u0131\u015F yolu laz\u0131m. Ama \xF6nce\u2026 neler
+      oldu\u011Funu \xF6\u011Frenmeliyim."
+  - speaker: 0
+    text: "Bu\u2026 Tan\u0131d\u0131k bir y\xFCz\u2026 evet, o ya\u015Fl\u0131 Enzo
+      amca olmal\u0131."
+  - speaker: 0
+    text: "Enzo amca\u2026 ger\xE7ekten sen misin? Y\u0131llar\u2026 y\u0131llar
+      olmu\u015F."
+  - speaker: 1
+    text: "Sen\u2026! Demek geri d\xF6nd\xFCn evlat. Seni burada g\xF6rmek\u2026
+      hem sevindirdi hem de i\xE7imi burktu."
+  - speaker: 0
+    text: "Buralara ne oldu Enzo amca? Evlerimiz, sokaklar\u0131m\u0131z\u2026 hepsi
+      kaybolmu\u015F. Tan\u0131yam\u0131yorum bile."
+  - speaker: 1
+    text: "Yeni belediye ba\u015Fkan\u0131n\u0131n i\u015Fi evlat. \u2018Kentsel
+      d\xF6n\xFC\u015F\xFCm\u2019 dediler. Ama asl\u0131nda bu i\u015Fin alt\u0131nda
+      para ve g\xFC\xE7 h\u0131rs\u0131 yat\u0131yor. Kara para akl\u0131yorlar,
+      sokaklar\u0131 par\xE7a par\xE7a satt\u0131lar."
+  - speaker: 0
+    text: "Demek her \u015Fey onlar\u0131n oyunu\u2026 Ama ben bu sokaklar\u0131,
+      bu insanlar\u0131 yeniden bir araya getirece\u011Fim. Bunu babam i\xE7in, kendim
+      i\xE7in yapaca\u011F\u0131m."
+  - speaker: 1
+    text: "Cesurlu\u011Funu seviyorum evlat\u2026 Ama unutma, hapisten yeni \xE7\u0131kt\u0131n.
+      Ne paran var, ne de d\xFCzg\xFCn bir k\u0131yafetin."
+  - speaker: 1
+    text: "Al, bu cebimde kalan son 20 dolar\u2026 \xC7ok de\u011Fil ama ba\u015Flang\u0131\xE7
+      i\xE7in i\u015Fini g\xF6rebilir."
+  - speaker: 0
+    text: "Enzo amca\u2026 bunu yapmana gerek yoktu\u2026"
+  - speaker: 1
+    text: "Laf\u0131 b\u0131rak! Git meydandaki parka. Orada ufak tefek i\u015Fler
+      bulabilirsin. Para kazan, kendini toparla. \u0130nsanlar seni yeniden g\xF6rs\xFCn,
+      sana g\xFCvensin."
+  - speaker: 0
+    text: "Sonras\u0131\u2026 senin azmine kalm\u0131\u015F evlat. Belki bir g\xFCn
+      bu sokaklar\u0131 tekrar hak etti\u011Fi gibi g\xF6r\xFCr\xFCz."
+  - speaker: 0
+    text: "S\xF6z veriyorum Enzo amca. Hem bu soka\u011F\u0131 eski haline getirece\u011Fim\u2026
+      hem de babam\u0131n katilini bulaca\u011F\u0131m."

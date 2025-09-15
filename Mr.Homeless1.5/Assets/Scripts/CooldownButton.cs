@@ -9,9 +9,9 @@ public class CooldownButton : MonoBehaviour
     public string cooldownID; // BuildingName + ActionType gibi benzersiz bir þey atanacak
 
     public float cooldownDuration = 5f;
-    public Text cooldownText; // Soldaki sayaç
-    public Text actionText;   // Butonun anlamý (örneðin "Market Aç")
-    public Text jobDeffanceText; 
+    public TextMeshProUGUI cooldownText; // Soldaki sayaç
+    public TextMeshProUGUI actionText;   // Butonun anlamý (örneðin "Market Aç")
+    public TextMeshProUGUI jobDeffanceText; 
 
     private Button button;
     private float currentCooldown = 0f;

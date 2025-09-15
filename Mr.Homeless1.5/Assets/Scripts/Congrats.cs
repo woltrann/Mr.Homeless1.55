@@ -3,13 +3,14 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Congrats : MonoBehaviour
 {
     public static Congrats Instance;  
     public GameObject GameOverPanel;
-    public Text panelTitle;
-    public Text panelText;
+    public TextMeshProUGUI panelTitle;
+    public TextMeshProUGUI panelText;
 
     private void Awake()
     {
