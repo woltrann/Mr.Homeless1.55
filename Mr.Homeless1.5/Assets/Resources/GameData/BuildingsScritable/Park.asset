@@ -38,7 +38,7 @@ MonoBehaviour:
       amount: 10
   - buttonText: Dilen
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
-    actionType: 4
+    actionType: 3
     cooldownDuration: 2
     jobDeffance: 0
     statChanges:
@@ -50,5 +50,17 @@ MonoBehaviour:
       amount: -7
     - statType: 1
       amount: -1
+  - buttonText: Su Sat
+    icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
+    actionType: 4
+    cooldownDuration: 20
+    jobDeffance: 0
+    statChanges:
+    - statType: 0
+      amount: -15
+    - statType: 0
+      amount: 30
+    - statType: 3
+      amount: -20
   purchesableItems:
   - {fileID: 11400000, guid: 03fb392a9b2e9434ca1a03b33fa57431, type: 2}
