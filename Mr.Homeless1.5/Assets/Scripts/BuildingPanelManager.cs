@@ -149,6 +149,8 @@ public class BuildingPanelManager : MonoBehaviour
             cooldown.cooldownID = id;
             cooldown.cooldownDuration = action.cooldownDuration;
             cooldown.SetActionText(action.buttonText, action.jobDeffance.ToString());
+            cooldown.SetNeedText(action.statChanges);
+
             cooldown.SetCallback(() => {
                 ExecuteAction(action.actionType, action);
                 CooldownManager.Instance.StartCooldown(id, action.cooldownDuration);

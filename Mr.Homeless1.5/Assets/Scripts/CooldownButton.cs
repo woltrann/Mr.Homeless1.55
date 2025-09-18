@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Button))]
 public class CooldownButton : MonoBehaviour
@@ -11,7 +12,8 @@ public class CooldownButton : MonoBehaviour
     public float cooldownDuration = 5f;
     public TextMeshProUGUI cooldownText; // Soldaki sayaç
     public TextMeshProUGUI actionText;   // Butonun anlamý (örneðin "Market Aç")
-    public TextMeshProUGUI jobDeffanceText; 
+    public TextMeshProUGUI jobDeffanceText;
+    public TextMeshProUGUI needText;
 
     private Button button;
     private float currentCooldown = 0f;
@@ -60,6 +62,18 @@ public class CooldownButton : MonoBehaviour
             jobDeffanceText.text = deffencetext;
         }
         
+    }
+    public void SetNeedText(List<StatChange> statChanges)
+    {
+        if (needText == null) return;
+
+        needText.text = ""; // Önce temizle
+
+        foreach (var change in statChanges)
+        {
+            string sign = change.amount > 0 ? "+" : ""; // Pozitifse baþýna + koy
+            needText.text += $"{change.statType}: {sign}{change.amount}\n";
+        }
     }
 
     IEnumerator CooldownRoutine()

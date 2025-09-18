@@ -17839,9 +17839,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyImage: {fileID: 806456945}
   storyPanels:
-  - {fileID: 21300000, guid: b43dffff588006e468e6b0b83a33c358, type: 3}
-  - {fileID: 21300000, guid: 9e873bca43457cc4ab356fe9be3c781b, type: 3}
-  - {fileID: 21300000, guid: e68c845fdd5ba974a8779b90e4ff8330, type: 3}
+  - {fileID: 21300000, guid: 2357318c4e093304489c7e8dde8d7579, type: 3}
+  - {fileID: 21300000, guid: 20a54d1430befc845907dc435ac0e9c1, type: 3}
+  - {fileID: 21300000, guid: f32336607a737604eb60f35dde68d9c7, type: 3}
+  - {fileID: 21300000, guid: c1337652ebfba8a41a60620a3c1bc996, type: 3}
+  - {fileID: 21300000, guid: 66b141fbc78a2f54d98d132195dec960, type: 3}
+  - {fileID: 21300000, guid: 10e278ff4746f194da8a4e37dcc212eb, type: 3}
   fadeImage: {fileID: 2121409806}
   storyUI: {fileID: 346660403}
   nextButton: {fileID: 809940460}
@@ -59237,7 +59240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.2}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

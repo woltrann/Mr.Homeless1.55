@@ -57,7 +57,7 @@ MonoBehaviour:
     text: "Laf\u0131 b\u0131rak! Git meydandaki parka. Orada ufak tefek i\u015Fler
       bulabilirsin. Para kazan, kendini toparla. \u0130nsanlar seni yeniden g\xF6rs\xFCn,
       sana g\xFCvensin."
-  - speaker: 0
+  - speaker: 1
     text: "Sonras\u0131\u2026 senin azmine kalm\u0131\u015F evlat. Belki bir g\xFCn
       bu sokaklar\u0131 tekrar hak etti\u011Fi gibi g\xF6r\xFCr\xFCz."
   - speaker: 0

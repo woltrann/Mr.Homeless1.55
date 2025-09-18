@@ -23,6 +23,30 @@ MonoBehaviour:
     cooldownDuration: 0
     jobDeffance: 0
     statChanges: []
+  - buttonText: "Camlar\u0131 \u0130ndir"
+    icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
+    actionType: 2
+    cooldownDuration: 45
+    jobDeffance: 20
+    statChanges:
+    - statType: 1
+      amount: 10
+    - statType: 2
+      amount: -3
+    - statType: 3
+      amount: -5
+  - buttonText: "Kavga \xC7\u0131kar"
+    icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
+    actionType: 3
+    cooldownDuration: 4
+    jobDeffance: 50
+    statChanges:
+    - statType: 1
+      amount: 20
+    - statType: 2
+      amount: -10
+    - statType: 3
+      amount: -20
   - buttonText: Soygun Yap
     icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
     actionType: 1
@@ -35,30 +59,6 @@ MonoBehaviour:
       amount: -20
     - statType: 3
       amount: -7
-  - buttonText: "Camlar\u0131 \u0130ndir"
-    icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
-    actionType: 2
-    cooldownDuration: 45
-    jobDeffance: 5
-    statChanges:
-    - statType: 1
-      amount: 10
-    - statType: 2
-      amount: -3
-    - statType: 3
-      amount: -5
-  - buttonText: "Kavga \xC7\u0131kar"
-    icon: {fileID: 21300000, guid: 3628ef74d72c2b542a804664f4d4b101, type: 3}
-    actionType: 3
-    cooldownDuration: 4
-    jobDeffance: 25
-    statChanges:
-    - statType: 1
-      amount: 20
-    - statType: 2
-      amount: -10
-    - statType: 3
-      amount: -20
   purchesableItems:
   - {fileID: 11400000, guid: 03fb392a9b2e9434ca1a03b33fa57431, type: 2}
   - {fileID: 11400000, guid: 59845f687805aa047807e30585c18832, type: 2}
